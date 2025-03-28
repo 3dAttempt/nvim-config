@@ -14,6 +14,7 @@ M.start = function()
 	local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
 
 	local on_attach = require("lsp.on_attach").setup
+  local capabilites = require('cmp_nvim_lsp').default_capabilities()
 
 	local config = {
 		cmd = {
@@ -64,6 +65,7 @@ M.start = function()
 			},
 		},
 		on_attach = on_attach,
+    capabilites = capabilites,
 		init_options = {
 			bundles = {},
 		},
