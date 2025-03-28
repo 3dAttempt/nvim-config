@@ -9,48 +9,24 @@ return {
     'williamboman/mason-lspconfig.nvim',
     config = function()
       require('mason-lspconfig').setup {
-        ensure_installed = { 'lua_ls', 'jdtls' },
+        ensure_installed = { 'lua_ls' },
       }
     end,
+  },
+  {
+    'mfussenegger/nvim-jdtls',
+    ft = 'java',
   },
   {
     'neovim/nvim-lspconfig',
     config = function()
       local lspconfig = require 'lspconfig'
-      lspconfig.lua_ls.setup {}
-      lspconfig.jdtls.setup {
-        settings = {
-          java = {
-            eclipse = {
-              downloadSources = true,
-            },
-            configuration = {
-              updateBuildConfiguration = 'automatic',
-            },
-            maven = {
-                downloadSources = true,
-                updateSnapshots = true
-            },
-            implementationsCodeLens = {
-                enabled = true,
-            },
-            referencesCodeLens = {
-                enabled = true,
-            },
-            references = {
-                includeDecompiledSources = true,
-            },
-            format = {
-                enabled = true,
-            },
-          },
-        },
+
+      local on_attach = require('lsp.on_attach').setup
+
+      lspconfig.lua_ls.setup {
+        on_attach = on_attach,
       }
-      -- Keymaps
-      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
-      vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
     end,
   },
 }
